@@ -1,0 +1,66 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header{
+    height: 100px;
+    background-color: #00102E;
+}
+
+header .logo img{
+    max-width: 100px;
+}
+
+header .cart{
+    display: flex;
+    align-self: center;
+    max-width: 44px;
+    height: 44px;
+    background-color:#FFEC00 ;
+    border-radius: 50%;
+}
+
+header .cart a{
+    color: #000;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    font-size: 18px;   
+    text-align: center;
+    text-decoration: none;
+}
+
+
+table{
+    padding: 15px;
+    width: 100%;
+    
+}
+
+thead {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+td{
+    font-size: 14px;
+}
+
+td p{
+    margin-top: 8px;
+}
+
+input[type=number]{
+    max-width: 50px;
+    
+}
+
+button{
+    background-color: #FFEC00;
+    border: 0;
+    color: #000;
+    margin-top: 15px;
+    padding: 8px;
+}
