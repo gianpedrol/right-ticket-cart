@@ -64,3 +64,15 @@ button{
     margin-top: 15px;
     padding: 8px;
 }
+
+.event-info h2{
+    padding: 30px;
+}
+
+.event-description{
+    padding: 30px;
+}
+
+.input-price{
+    width: 40px;
+}

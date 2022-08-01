@@ -28,16 +28,16 @@ class CartController extends Controller
 
     public function addCart(Request $request)
     {
-        
+
         $event = Event::where('EventID', $request->id)->first();
-        
+
         $cart = session()->get('cart', []);
 
-            $cart[$event->EventID] = [
-                "id" => $event->EventID,
-                "name" => $event->EventName,
-            ];
-     
+        $cart[$event->EventID] = [
+            "id" => $event->EventID,
+            "name" => $event->EventName,
+        ];
+
 
         session()->put('cart', $cart);
         return response()->json(['message' => 'Thank you!', $cart], 200);
@@ -47,10 +47,10 @@ class CartController extends Controller
     {
         //session()->pull('cart', []);
         $session = session()->has('cart');
-       // dd(session());
+        // dd(session());
         if (!empty($session)) {
             $items = session()->get('cart');
-           // dd($items);
+            // dd($items);
             return view('cart.cart', compact('items'));
         } else {
             $items = null;
@@ -58,11 +58,12 @@ class CartController extends Controller
         }
     }
 
-    public function updateCart($id, Request $request){
+    public function updateCart($id, Request $request)
+    {
 
-            $items = session()->get('cart');
-            
-        $request->session()->forget('cart' ,[$id]);
+        $items = session()->get('cart');
+
+        $request->session()->forget('cart', [$id]);
 
         if (!empty($session)) {
             $items = session()->get('cart');
@@ -74,19 +75,19 @@ class CartController extends Controller
         }
     }
 
-    public function showEvent($id){
+    public function showEvent($id)
+    {
         $event = Event::from('yb_tkt_event as event')
-        ->select('event.EventID','event.Description','Disclaimer', 'event.StartDate', 'event.EndDate', 'ticket.Price', 'ticket.ThumbImage', 'event.Store.ID', 'event.CategoryIDS')
-        ->leftJoin('yb_tkt_ticket as ticket', 'event.EventID',  '=',  'ticket.TicketID')
-        ->where('event.EventID', '=', $id)
-        ->get();
+            ->select('event.EventID', 'event.EventName', 'event.Description', 'event.Disclaimer', 'event.StartDate', 'event.EndDate', 'ticket.Price', 'ticket.ThumbImage', 'event.StoreID', 'event.CategoryID')
+            ->leftJoin('yb_tkt_ticket as ticket', 'event.EventID',  '=',  'ticket.TicketID')
+            ->where('event.EventID', '=', $id)
+            ->get();
 
-        dd($event);
 
-    foreach ($event as $data) {
-        $data['ticketType'] = DB::table('yb_tkt_ticket as ticket')->select('ticket.TicketName')->where('ticket.TicketID', $data->EventID)->get();
-    }   
+        foreach ($event as $data) {
+            $data['ticketType'] = DB::table('yb_tkt_ticket as ticket')->where('ticket.StoreID', $data->StoreID)->get();
+        }
 
-    return view('cart.cart', compact('event'));
+        return view('cart.cart', compact('event'));
     }
 }

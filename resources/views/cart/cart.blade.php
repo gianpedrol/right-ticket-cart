@@ -55,24 +55,63 @@
 
     <div class="container">
         <div class="row">
-            @if ($event!= null)
-            @foreach ($event as $item)
-                <div class="col-md-6">
-                    <div class="image-event">
-                        <img src="https://ingresso-a.akamaihd.net/prd/img/movie/thor-amor-e-trovao/514a36c8-1e3f-4a26-a30a-04e58b9eb9a5.jpg" alt="">
-                    </div>    
-                </div>
-                <div class="col-md-6">
-                    <div class="event-info">
-                        <h2>{{$item['EventName']}}</h2>
-
-                        <p>
-                            {{dd($item)}}
-                        </p>
-
+            @if ($event != null)
+                @foreach ($event as $item)
+                    <div class="col-md-6">
+                        <div class="image-event">
+                            <img src="https://ingresso-a.akamaihd.net/prd/img/movie/thor-amor-e-trovao/514a36c8-1e3f-4a26-a30a-04e58b9eb9a5.jpg"
+                                alt="">
+                        </div>
                     </div>
-                </div>
-            @endforeach
+                    <div class="col-md-6">
+                        <div class="event-info">
+
+                            <h2>{{ $item['EventName'] }}</h2>
+                            <div class="event-description">
+                                <p>{{ $item['Description'] }}</p>
+                            </div>
+                            <div class="card card-primary">
+                                <div class="card-header">
+
+                                    <div class="card-title">
+                                        <h3>Choose Tickets</h3>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <table>
+                                        <thead>
+                                            <td>Type</td>
+                                            <td>Qty</td>
+                                            <td>Price</td>
+                                            <td>Subtotal</td>
+                                        </thead>
+                                        @foreach ($item['ticketType'] as $key => $value)
+                                            <tbody>
+                                                <tr>
+                                                    <td>{{ $value->TicketName }}</td>
+                                                    <td><input type="number"></td>
+                                                    <td>
+                                                        <div class="input-group-prepend ">
+                                                            <span class="input-group-text w-50">$
+                                                                {{ $value->Price }}</span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="input-group-prepend ">
+                                                            <span class="input-group-text w-50">$
+                                                                {{ $value->Price }}</span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        @endforeach
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                @endforeach
             @endif
         </div>
     </div>

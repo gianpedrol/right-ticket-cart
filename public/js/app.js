@@ -2070,22 +2070,13 @@ $(document).ready(function () {
   $(function () {
     $('form[name="addTocart"]').on("submit", function (event) {
       var id = $(this).attr("data-id");
-      var quantity = $(this).find('input[name="quantity"]').val();
-
-      if (quantity == undefined) {
-        quantity = 1;
-      }
-
       event.preventDefault();
-      var obj = [id, quantity]; // alert("submit");
-
       $.ajax({
         url: $(this).attr("action"),
         method: "post",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify({
-          id: id,
-          quantity: quantity
+          id: id
         }),
         dataType: "json",
         success: function success(data) {
@@ -2119,7 +2110,7 @@ $(document).ready(function () {
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({
                 id: id,
-                 quantity: quantity,
+                  quantity: quantity,
             }),
             dataType: "json",
             success: function (data) {
