@@ -28,41 +28,18 @@ class CartController extends Controller
 
     public function addCart(Request $request)
     {
+        
+        $event = Event::where('EventID', $request->id)->first();
+        
+        $cart = session()->get('cart', []);
 
-        if (empty($request['quantity'])) {
-            $quantidade = 1;
-        } else {
-            $quantidade = (int)$request['quantity'];
-        }
+            $cart[$event->EventID] = [
+                "id" => $event->EventID,
+                "name" => $event->EventName,
+            ];
+     
 
-        $event = Calendar::where('CalendarID', $request->id)->first();
-
-        if (Session('cart.' .  $request->id)) {
-
-            Session(
-                [
-                    'id' =>  $request->id,
-                    'quantidade' => $quantidade,
-                    'name' => $event->EventName,
-                    'valor' => 20
-                ],
-            );
-            $cart = session()->get('cart');
-            return response()->json(['message' => 'Thank you!', $cart], 200);
-        } else {
-            // dd($event);
-            Session([
-                'cart.' .  $request->id =>
-                [
-                    'id' =>  $request->id,
-                    'quantidade' => $quantidade,
-                    'name' => $event->EventName,
-                    'valor' => 20
-                ]
-            ]);
-            Session(['cart.' .  $request->id . '.quantidade' => 1, 'valor' => (float)20.00]);
-        }
-        $cart = session()->get('cart');
+        session()->put('cart', $cart);
         return response()->json(['message' => 'Thank you!', $cart], 200);
     }
 
@@ -73,6 +50,22 @@ class CartController extends Controller
        // dd(session());
         if (!empty($session)) {
             $items = session()->get('cart');
+           // dd($items);
+            return view('cart.cart', compact('items'));
+        } else {
+            $items = null;
+            return view('cart.cart', compact('items'));
+        }
+    }
+
+    public function updateCart($id, Request $request){
+
+            $items = session()->get('cart');
+            
+        $request->session()->forget('cart' ,[$id]);
+
+        if (!empty($session)) {
+            $items = session()->get('cart');
             //dd($items);
             return view('cart.cart', compact('items'));
         } else {
@@ -81,10 +74,19 @@ class CartController extends Controller
         }
     }
 
-    public function updateCart($id){
+    public function showEvent($id){
+        $event = Event::from('yb_tkt_event as event')
+        ->select('event.EventID','event.Description','Disclaimer', 'event.StartDate', 'event.EndDate', 'ticket.Price', 'ticket.ThumbImage', 'event.Store.ID', 'event.CategoryIDS')
+        ->leftJoin('yb_tkt_ticket as ticket', 'event.EventID',  '=',  'ticket.TicketID')
+        ->where('event.EventID', '=', $id)
+        ->get();
 
-        $request->session()->forget($id);
+        dd($event);
 
-        return response()->json('ok');
+    foreach ($event as $data) {
+        $data['ticketType'] = DB::table('yb_tkt_ticket as ticket')->select('ticket.TicketName')->where('ticket.TicketID', $data->EventID)->get();
+    }   
+
+    return view('cart.cart', compact('event'));
     }
 }

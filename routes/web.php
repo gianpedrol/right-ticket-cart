@@ -25,4 +25,6 @@ Route::get('/events', [CartController::class, 'index'])->name('events');
 
 Route::get('/updatecart/{id}', [CartController::class, 'updateCart']);
 
-Route::get('/events/cart/checkout ', [CartController::class, 'checkoutCart'])->name('checkout');
+Route::get('cart/checkout ', [CartController::class, 'checkoutCart'])->name('checkout');
+
+Route::get('event/{id}', [CartController::class, 'showEvent']);

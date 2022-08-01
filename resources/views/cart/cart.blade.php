@@ -55,38 +55,25 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
-                @if ($items != null)
-                    @foreach ($items as $item)
-                        <table>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <p>
-                                        <p>{{ $item['name'] }}</p>
-                                        </p>
-                                    </td>
-                                    <td>
-                                        <form id="cartformcheckout" name="updateTocart" data-id="{{ $item['id'] }}"
-                                            action="{{ route('addtocart') }}" method="POST">
-                                            <p> <input type="number" name="quantity" id="quantity"
-                                                    value="{{ $item['quantidade'] }}"></p>
-                                    </td>
-                                    <td>
-                                        <button type="submit">atualizar quantidade</button>
-                                        </form>
-                                    </td>
-                                    <td>
-                                        
-                                        <span><a href= "{{url('updatecart')}}/{{$item['id']}}">x</a></span>
-                                      
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    @endforeach
-                @endif
-            </div>
+            @if ($event!= null)
+            @foreach ($event as $item)
+                <div class="col-md-6">
+                    <div class="image-event">
+                        <img src="https://ingresso-a.akamaihd.net/prd/img/movie/thor-amor-e-trovao/514a36c8-1e3f-4a26-a30a-04e58b9eb9a5.jpg" alt="">
+                    </div>    
+                </div>
+                <div class="col-md-6">
+                    <div class="event-info">
+                        <h2>{{$item['EventName']}}</h2>
+
+                        <p>
+                            {{dd($item)}}
+                        </p>
+
+                    </div>
+                </div>
+            @endforeach
+            @endif
         </div>
     </div>
 

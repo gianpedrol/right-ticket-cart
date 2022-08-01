@@ -42,7 +42,7 @@
                     <img src="images/right-ticket.png" alt="">
                 </div>
                 <div class=" col-md 6 cart d-flex justify-content-end">
-                    <a href="http://localhost/right-ticket/public/events/cart/checkout"><i
+                    <a href="http://localhost/right-ticket-cart/public/cart/checkout"><i
                             class="fa-solid fa-cart-shopping"></i></a>
                 </div>
             </div>
@@ -64,10 +64,6 @@
 
                                 <table width="100" align="center" cellpadding="10" cellspacing="5">
                                     <thead align="center">
-                                        <td></td>
-                                        <td>Price</td>
-                                        <td>Quantity</td>
-                                    </thead>
                                     <tbody align="center">
                                         <tr>
                                             <td>
@@ -78,7 +74,6 @@
                                             <td>
                                                 <p id="price">{{ $item->Price }}</p>
                                             </td>
-                                            <td><input type="number" id="quantity"></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -92,6 +87,8 @@
         </div>
 
     </div>
+
+
 
 
 
