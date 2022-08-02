@@ -65,14 +65,26 @@ button{
     padding: 8px;
 }
 
+.image-event img{
+    width: 60%;
+    border-radius: 0 10px 10px 10px;
+}
+
 .event-info h2{
-    padding: 30px;
+    padding: 30px 15px;
 }
 
 .event-description{
-    padding: 30px;
+    padding: 30px 15px;
 }
 
 .input-price{
     width: 40px;
 }
+
+.choose-ticket{
+    padding: 30px 15px;
+}
+
+
+

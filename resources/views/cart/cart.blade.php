@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/solid.min.css"
         integrity="sha512-qzgHTQ60z8RJitD5a28/c47in6WlHGuyRvMusdnuWWBB6fZ0DWG/KyfchGSBlLVeqAz+1LzNq+gGZkCSHnSd3g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jautocalc@1.3.1/dist/jautocalc.js"></script>
 
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
 
@@ -77,7 +78,7 @@
                                         <h3>Choose Tickets</h3>
                                     </div>
                                 </div>
-                                <div class="card-body">
+                                <div class="card-body choose-ticket">
                                     <table>
                                         <thead>
                                             <td>Type</td>
@@ -89,17 +90,15 @@
                                             <tbody>
                                                 <tr>
                                                     <td>{{ $value->TicketName }}</td>
-                                                    <td><input type="number"></td>
-                                                    <td>
+                                                    <td><input type="number" id="qty"  min="0" name="qty"></td>
+                                                    <td id="price">
                                                         <div class="input-group-prepend ">
-                                                            <span class="input-group-text w-50">$
-                                                                {{ $value->Price }}</span>
+                                                            <span class="input-group-text w-50 price-col" id="price-col" name="price">$<span name="price">{{ $value->Price }}</span></span>
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div class="input-group-prepend ">
-                                                            <span class="input-group-text w-50">$
-                                                                {{ $value->Price }}</span>
+                                                            <span class="input-group-text w-50" >$ <span  name="item_total" value="" jAutoCalc="{qty} * {price}"></span></span>
                                                         </div>
                                                     </td>
                                                 </tr>
