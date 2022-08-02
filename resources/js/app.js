@@ -10,7 +10,7 @@ $(document).ready(function () {
         $('form[name="addTocart"]').on("submit", function (event) {
             var id = $(this).attr("data-id");
             event.preventDefault();
-         $.ajax({
+            $.ajax({
                 url: $(this).attr("action"),
                 method: "post",
                 contentType: "application/json; charset=utf-8",
@@ -65,29 +65,26 @@ $(document).ready(function () {
                 },
             });*/
     });
-    $( "#qty" ).change(function() {
-        //procura todos os elementos em que o id começa com preco_ e que está dentro de uma td
-        $("price").each(function () {
-            var valor = $('#price-col').text();
-            var quantidade = $('#qty').val();
-            var total = valor * quantidade;
-            document.getElementById('subtotal').innerHTML = total.toFixed(2);
-            //conteudo da tag td que tem id começando com #preco_
-            var valor = $(this).text();
-            //encontra a tag tr pai da tag td, depois encontra a tag quantity-col 
-            //e retorna o valor do input
-            var quantidade = $(this).parent().find('#qty').find('input').val();
-    
-            if(quantidade != ''){
-                quantidades = parseInt(quantidade) + quantidades;
-            }
-            total = (valor * quantidade);
-        });
-        console.log(total);
-        $("#subtotal").html(total)
-      });
+    //procura todos os elementos em que o id começa com preco_ e que está dentro de uma td
 
-     
-    
 });
 
+
+$("#row").change(function () {
+    var valor = $("#price").text();
+    var quantidade = $("#qty").val();
+    var total = valor * quantidade;
+    document.getElementById("subtotal").innerHTML = total.toFixed(2);
+    //conteudo da tag td que tem id começando com #preco_
+    var valor = $(this).text();
+    //encontra a tag tr pai da tag td, depois encontra a tag quantity-col
+    //e retorna o valor do input
+    var quantidade = $(this).parent().find("#qty").find("input").val();
+
+    if (quantidade != "") {
+        quantidades = parseInt(quantidade) + quantidades;
+    }
+    total = valor * quantidade;
+});
+console.log(total);
+$("#subtotal").html(total);

@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/solid.min.css"
         integrity="sha512-qzgHTQ60z8RJitD5a28/c47in6WlHGuyRvMusdnuWWBB6fZ0DWG/KyfchGSBlLVeqAz+1LzNq+gGZkCSHnSd3g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jautocalc@1.3.1/dist/jautocalc.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jautocalc@1.3.1/dist/jautocalc.js"></script>
 
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
 
@@ -88,17 +88,21 @@
                                         </thead>
                                         @foreach ($item['ticketType'] as $key => $value)
                                             <tbody>
-                                                <tr>
+                                                <tr id="row">
                                                     <td>{{ $value->TicketName }}</td>
-                                                    <td><input type="number" id="qty"  min="0" name="qty"></td>
-                                                    <td id="price">
+                                                    <td><input type="number" id="qty_"
+                                                            onchange="Multiplica({{ $item['EventID'] }})"
+                                                            min="0">0</td>
+                                                    <td id="price_col">
                                                         <div class="input-group-prepend ">
-                                                            <span class="input-group-text w-50 price-col" id="price-col" name="price">$<span name="price">{{ $value->Price }}</span></span>
+                                                            <span class="input-group-text w-50">$<span
+                                                                    id="price_">{{ $value->Price }}</span></span>
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div class="input-group-prepend ">
-                                                            <span class="input-group-text w-50" >$ <span  name="item_total" value="" jAutoCalc="{qty} * {price}"></span></span>
+                                                            <span class="input-group-text w-50">$ <span
+                                                                    id="subtotal_{{ $item['EventID'] }}"></span></span>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -137,12 +141,36 @@
 
 
     @yield('scripts')
-    <!-- Local Scripts -->
-    <script src="{{ asset('/js/app.js') }}"></script>
+    <script>
+        function Multiplica(id) {
+
+            //var valor = $('#price_' + id).text();
+            var quantidades = 0;
+            //procura todos os elementos em que o id começa com preco_ e que está dentro de uma td
+            $("#price-col").each(function(id) {
+                //conteudo da tag td que tem id começando com #preco_
+                var valor = $("#price_").text();
+                var quantity = $("#qty_").val();
+                console.log(quantity);
+
+                //encontra a tag tr pai da tag td, depois encontra a tag quantity-col 
+                //e retorna o valor do input
+                var quantidade = $(this).parent().find('.quantity-col').find('input').val();
+
+                if (quantidade != '') {
+                    quantidades = parseInt(quantidade) + quantidades;
+                }
+                totals += (valor * quantidade);
+
+            });
+            //  $("#totalSoma").text(number_format(totals, '2', ',', '.'));
+            // $("#totalQuantidade").html(quantidades);
+        }
+    </script>
+
+    <script src="{{ asset('/js/app.js') }}">
+        < /body>
 
 
-
-</body>
-
-
-</html>
+        <
+        /html>
