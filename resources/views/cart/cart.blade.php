@@ -6,6 +6,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -58,13 +61,13 @@
         <div class="row">
             @if ($event != null)
                 @foreach ($event as $item)
-                    <div class="col-md-6">
-                        <div class="image-event">
+                    <div class="col-md-6 pt-5 d-flex justify-content-center align-items center ">
+                        <div class="image-event text-center">
                             <img src="https://ingresso-a.akamaihd.net/prd/img/movie/thor-amor-e-trovao/514a36c8-1e3f-4a26-a30a-04e58b9eb9a5.jpg"
                                 alt="">
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6  d-flex justify-content-start align-items-start pt-5">
                         <div class="event-info">
 
                             <h2>{{ $item['EventName'] }}</h2>
@@ -81,34 +84,63 @@
                                 <div class="card-body choose-ticket">
                                     <table>
                                         <thead>
-                                            <td>Type</td>
-                                            <td>Qty</td>
-                                            <td>Price</td>
-                                            <td>Subtotal</td>
+                                            <tr>
+                                                <td>
+                                                    <h5>Ticket Type</h5>
+                                                </td>
+                                                <td>
+                                                    <h5>Quantity</h5>
+                                                </td>
+                
+                                                <td>
+                                                    <h5>Price</h5>
+                                                </td>
+                                                <td>
+                                                    <h5>Tax</h5>
+                                                </td>
+                                                <td>
+                                                    <h5>Subtotal</h5>
+                                                </td>
+                                            </tr>
                                         </thead>
                                         @foreach ($item['ticketType'] as $key => $value)
                                             <tbody>
                                                 <tr id="row">
-                                                    <td>{{ $value->TicketName }}</td>
-                                                    <td><input type="number" id="qty_"
-                                                            onchange="Multiplica({{ $item['EventID'] }})"
-                                                            min="0">0</td>
-                                                    <td id="price_col">
-                                                        <div class="input-group-prepend ">
-                                                            <span class="input-group-text w-50">$<span
-                                                                    id="price_">{{ $value->Price }}</span></span>
-                                                        </div>
+                                                    <td>
+                                                        <p>{{$value->TicketName}}</p>
                                                     </td>
                                                     <td>
-                                                        <div class="input-group-prepend ">
-                                                            <span class="input-group-text w-50">$ <span
-                                                                    id="subtotal_{{ $item['EventID'] }}"></span></span>
-                                                        </div>
+                                                        <input id="qty_{{$key}}" type="number" onchange="Multiplica({{$key}})" min="0">
+                                                    </td>
+                                                    <td>
+                                                       <span>$</span> <span id="price_{{$key}}">{{$value->Price}}</span>
+                                                    </td>
+                                                    <td>
+                                                        <span>$</span>  <span id="tax_{{$key}}">{{$value->TaxAmount}} </span><span>each</span>
+                                                    </td>
+                                                    
+                                                    <td>
+                                                        <span name="total" id="subtotal_{{$key}}">0.00</span>
                                                     </td>
                                                 </tr>
                                             </tbody>
                                         @endforeach
+                                        <tfoot>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td class="total"><h5>Total :</h5></td>
+                                                <td class="total">
+                                                    <span id="totalTicket">0.00</span>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
                                     </table>
+                                    <table>
+
+                                    </table>
+                                    
                                 </div>
                             </div>
 
@@ -119,6 +151,152 @@
         </div>
     </div>
 
+    <div class="container pt-3">
+        <div class="row">
+            <div class="col-md-6 pb-5">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h5>Customer Info</h5>
+                    </div>
+                    <div class="card-body">
+                        <form action="">
+                                <label for="" class="company-name">
+                                    <h6>
+                                        Company Name
+                                    </h6>
+                                    <input class="form-control" type="text" name="" id="">
+                                </label>
+
+                                <label for="" class="pt-2">
+                                    <h6>
+                                        First Name:
+                                    </h6>
+                                    <input class="form-control" type="text" name="" id="">
+                                </label>
+                                <label for="" class="pt-2">
+                                <h6>
+                                    Last Name:
+                                </h6>
+                                <input class="form-control" type="text" name="" id="">
+                            </label>
+                            <label for="" class="pt-2">
+                                <h6>
+                                    Email:
+                                </h6>
+                                <input  class="form-control" type="email" name="" id="">
+                            </label>
+                            <label for="" class="pt-2">
+                                <h6>
+                                    Telephone:
+                                </h6>
+                                <input class="form-control" type="phone" name="" id="">
+                            </label>
+                            <label for="" class="pt-2">
+                                <h6>
+                                    ZipCode:*
+                                </h6>
+                                <input class="form-control" type="text" name="" id="">
+                            </label>
+                            <div class="custom-control custom-switch ml-5 pt-2">
+                                <h6>Opt-in to email/sms communications:</h6>
+                                <input type="checkbox" class="custom-control-input" id="chkOptin" name="chkOptin">
+                                <label class="custom-control-label" for="chkOptin">Yes</label>
+                                </div>
+                                <div class="custom-control custom-switch ml-5 pt-2" >
+                                    <h6>Agrees to Terms & Conditions:</h6>
+                                    <input type="checkbox" class="custom-control-input" id="chkOptin" name="chkOptin">
+                                    <label class="custom-control-label" for="chkOptin">Yes</label>
+                                    </div>
+                        </form>
+                    </div>
+    
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <strong>Credit Card</strong>
+                        <small>enter your card details</small>
+                    </div>
+                <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input class="form-control" id="name" type="text" placeholder="Enter your name">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="ccnumber">Credit Card Number</label>
+                            
+                            
+                            <div class="input-group">
+                                <input class="form-control" type="text" placeholder="0000 0000 0000 0000" autocomplete="email">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <i style=" font-size: 1.75rem"class="fa-solid fa-credit-card"></i>
+                                    </span>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="form-group col-sm-4">
+                        <label for="ccmonth">Month</label>
+                        <select class="form-control" id="ccmonth">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                        <option>11</option>
+                        <option>12</option>
+                        </select>
+                    </div>
+                <div class="form-group col-sm-4">
+                    <label for="ccyear">Year</label>
+                        <select class="form-control" id="ccyear">
+                            <option>2014</option>
+                            <option>2015</option>
+                            <option>2016</option>
+                            <option>2017</option>
+                            <option>2018</option>
+                            <option>2019</option>
+                            <option>2020</option>
+                            <option>2021</option>
+                            <option>2022</option>
+                            <option>2023</option>
+                            <option>2024</option>
+                            <option>2025</option>
+                        </select>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="cvv">CVV/CVC</label>
+                        <input class="form-control" id="cvv" type="text" placeholder="123">
+                    </div>                
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-sm btn-success float-right" type="submit">
+                    <i class="mdi mdi-gamepad-circle"></i> Continue</button>
+                    <button class="btn btn-sm btn-danger" type="reset">
+                    <i class="mdi mdi-lock-reset"></i> Reset</button>
+                    </div>
+                </div>
+        </div>
+        </div>
+    </div>
 
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -142,29 +320,22 @@
 
     @yield('scripts')
     <script>
+
         function Multiplica(id) {
 
-            //var valor = $('#price_' + id).text();
-            var quantidades = 0;
-            //procura todos os elementos em que o id começa com preco_ e que está dentro de uma td
-            $("#price-col").each(function(id) {
-                //conteudo da tag td que tem id começando com #preco_
-                var valor = $("#price_").text();
-                var quantity = $("#qty_").val();
-                console.log(quantity);
+            var valor = $("#price_"+id).text();
+            var quantity = $("#qty_" +id).val();
+            var tax = $("#tax_" +id).text();
+            let subtotal = quantity * (valor * tax);
 
-                //encontra a tag tr pai da tag td, depois encontra a tag quantity-col 
-                //e retorna o valor do input
-                var quantidade = $(this).parent().find('.quantity-col').find('input').val();
-
-                if (quantidade != '') {
-                    quantidades = parseInt(quantidade) + quantidades;
-                }
-                totals += (valor * quantidade);
-
+            $("#subtotal_"+id).html('$ ' + subtotal.toFixed(2));
+                var total = 0;
+            $('table tbody tr td:last-child').each(function(){
+            total +=  parseFloat($(this).text().replace('$','')); 
+               
             });
-            //  $("#totalSoma").text(number_format(totals, '2', ',', '.'));
-            // $("#totalQuantidade").html(quantidades);
+
+            $("#totalTicket").html('$ ' + total.toFixed(2));
         }
     </script>
 
