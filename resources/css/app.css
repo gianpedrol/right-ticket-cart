@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 *{
     margin: 0;
     padding: 0;
@@ -6,12 +7,12 @@
 }
 
 header{
-    height: 100px;
+    height: 140px;
     background-color: #00102E;
 }
 
 header .logo img{
-    max-width: 100px;
+    max-width: 140px;
 }
 
 header .cart{
@@ -32,6 +33,7 @@ header .cart a{
     text-align: center;
     text-decoration: none;
 }
+
 
 
 table{
@@ -58,16 +60,15 @@ input[type=number]{
     
 }
 
-button{
+.card-body button{
     background-color: #FFEC00;
     border: 0;
     color: #000;
-    margin-top: 15px;
     padding: 8px;
+    display: flex;
 }
 
 .image-event img{
-    width: 50%;
     border-radius: 10px
 }
 
@@ -93,9 +94,40 @@ button{
     padding: 30px 15px;
 }
 
-.choose-ticket h5{
-    font-size: 16px;
+.choose-ticket h3{
+    font-size: 14px;
     font-weight: bold;
+
+}
+
+.button a{
+    background-color: #FFEC00;
+    border: 0;
+    color: #000;
+    padding: 8px;
+    position: absolute;
+    bottom: 20px;
+    right: 15px;
+    text-decoration: none;
+    width: 120px;
+    border-radius: 3px;
+    text-align: center;
+}
+
+.button-cart a{
+    background-color: #FFEC00;
+    border: 0;
+    color: #000;
+    padding: 8px;
+    position: fixed;
+    bottom: 15px;
+    font-size: 16px;
+    left: 15px;
+    text-decoration: none;
+    width: 200px;
+    border-radius: 5px;
+    text-align: center;
+    z-index: 2000;
 }
 table, th, td {
     border: 1px solid #ccc;

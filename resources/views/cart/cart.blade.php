@@ -32,6 +32,8 @@
 
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
 
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+
     <script></script>
 
 
@@ -44,12 +46,11 @@
     <header>
         <div class="container">
             <div class="row">
-                <div class="col-md 6 logo d-flex justify-content-start">
-                    <img src="images/right-ticket.png" alt="">
+                <div class="col-md 6 logo d-flex justify-content-center">
+                    <img src="{{ url("/images/right-ticket.png") }}" alt="">
                 </div>
-                <div class=" col-md 6 cart d-flex justify-content-end">
-                    <a href="http://localhost/right-ticket/public/events/cart/checkout"><i
-                            class="fa-solid fa-cart-shopping"></i></a>
+                <div class="button-cart">
+                    <a href="{{ url("/events") }}">Back to Events Page</a>
                 </div>
             </div>
 
@@ -62,8 +63,8 @@
             @if ($event != null)
                 @foreach ($event as $item)
                     <div class="col-md-6 pt-5 d-flex justify-content-center align-items center ">
-                        <div class="image-event text-center">
-                            <img src="https://ingresso-a.akamaihd.net/prd/img/movie/thor-amor-e-trovao/514a36c8-1e3f-4a26-a30a-04e58b9eb9a5.jpg"
+                        <div class="image-event align-self-center text-center">
+                            <img src="https://ticket.rightticket.net/admin/rightticket/images/{{$item->ThumbImage}}"
                                 alt="">
                         </div>
                     </div>
@@ -164,38 +165,38 @@
                                     <h6>
                                         Company Name
                                     </h6>
-                                    <input class="form-control" type="text" name="" id="">
+                                    <input class="form-control" type="text" name="" id="companyName">
                                 </label>
 
                                 <label for="" class="pt-2">
                                     <h6>
                                         First Name:
                                     </h6>
-                                    <input class="form-control" type="text" name="" id="">
+                                    <input class="form-control" type="text" name="" id="firstName">
                                 </label>
                                 <label for="" class="pt-2">
                                 <h6>
                                     Last Name:
                                 </h6>
-                                <input class="form-control" type="text" name="" id="">
+                                <input class="form-control" type="text" name="" id="lastName">
                             </label>
                             <label for="" class="pt-2">
                                 <h6>
                                     Email:
                                 </h6>
-                                <input  class="form-control" type="email" name="" id="">
+                                <input  class="form-control" type="email" name="" id="email">
                             </label>
                             <label for="" class="pt-2">
                                 <h6>
                                     Telephone:
                                 </h6>
-                                <input class="form-control" type="phone" name="" id="">
+                                <input class="form-control" type="phone" name="" id="phone">
                             </label>
                             <label for="" class="pt-2">
                                 <h6>
                                     ZipCode:*
                                 </h6>
-                                <input class="form-control" type="text" name="" id="">
+                                <input class="form-control" type="text" name="" id="zipcode">
                             </label>
                             <div class="custom-control custom-switch ml-5 pt-2">
                                 <h6>Opt-in to email/sms communications:</h6>
@@ -235,7 +236,7 @@
                             
                             
                             <div class="input-group">
-                                <input class="form-control" type="text" placeholder="0000 0000 0000 0000" autocomplete="email">
+                                <input class="form-control" type="text" placeholder="0000 0000 0000 0000" autocomplete="email" id="cardNumber">
                                 <div class="input-group-append">
                                     <span class="input-group-text">
                                         <i style=" font-size: 1.75rem"class="fa-solid fa-credit-card"></i>
@@ -288,10 +289,11 @@
                     </div>                
                 </div>
                 <div class="card-footer">
-                    <button class="btn btn-sm btn-success float-right" type="submit">
+                    <button class="btn btn-sm btn-success" onclick="sendOrder(event)" type="submit">
                     <i class="mdi mdi-gamepad-circle"></i> Continue</button>
-                    <button class="btn btn-sm btn-danger" type="reset">
-                    <i class="mdi mdi-lock-reset"></i> Reset</button>
+                    
+                    <div class="amount">
+                       <span>$</span> <span id="totalTicket">0.00</span>
                     </div>
                 </div>
         </div>
@@ -337,6 +339,48 @@
 
             $("#totalTicket").html('$ ' + total.toFixed(2));
         }
+
+        function sendOrder(event){
+            var companyName = $("#companyName").val();
+            var firstName = $("#firstName").val();
+            var lastName = $("#lastName").val();
+            var email = $("#email").val();
+            var phone = $("#phone").val();
+            var zipcode = $("#zipcode").val();
+            var valuePaid = $("#totalTicket").val();
+            event.preventDefault();
+
+            $.ajax({
+                url: 'http://localhost/right-ticket-cart/public/order',
+                method: "post",
+                headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
+                    companyName: companyName,
+                    firstName : firstName,
+                    lastName : lastName,
+                    email : email,
+                    phone : phone,
+                    zipcode :zipcode
+                }),
+                dataType: "json",
+                success: function (data) {
+                    console.log("Submission was successful.");
+                    console.log(data);
+                    alert("ok");
+                },
+                error: function (data) {
+                    console.log("An error occurred.");
+                    console.log(data);
+                },
+            });
+
+            
+        }
+
+        
     </script>
 
     <script src="{{ asset('/js/app.js') }}">

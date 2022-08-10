@@ -38,12 +38,8 @@
     <header>
         <div class="container">
             <div class="row">
-                <div class="col-md 6 logo d-flex justify-content-start">
-                    <img src="images/right-ticket.png" alt="">
-                </div>
-                <div class=" col-md 6 cart d-flex justify-content-end">
-                    <a href="http://localhost/right-ticket-cart/public/cart/checkout"><i
-                            class="fa-solid fa-cart-shopping"></i></a>
+                <div class="col-md 6 logo d-flex justify-content-center">
+                    <img src="{{ url("/images/right-ticket.png") }}" alt="">
                 </div>
             </div>
 
@@ -55,30 +51,16 @@
 
             @foreach ($events as $item)
                 <div class="col-md-4 py-5">
-                    <div class="card " style="width: 18rem;">
-                        <img src="..." class="card-img-top" alt="...">
+                    <div class="card " style="width: 19rem; max-height: 600px; min-height: 550px">
+                        <img src="https://ticket.rightticket.net/admin/rightticket/images/{{$item->ThumbImage}}" class="card-img-top" alt="...">
                         <div class="card-body ">
-                            <h5 class="card-title">{{ $item->EventName }}</h5>
+                            <h3 class="card-title">{{ $item->EventName }}</h3>
                             <form id="cartform" name="addTocart" data-id="{{ $item->EventID }}"
                                 action="{{ route('addtocart') }}" method="POST">
-
-                                <table width="100" align="center" cellpadding="10" cellspacing="5">
-                                    <thead align="center">
-                                    <tbody align="center">
-                                        <tr>
-                                            <td>
-                                                @foreach ($item->ticketType as $key => $ticketType)
-                                                    <p>{{ $ticketType->TicketName }}</p>
-                                                @endforeach
-                                            </td>
-                                            <td>
-                                                <p id="price">{{ $item->Price }}</p>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <button type="submit">Adicionar ao
-                                    carrinho</button>
+                                    <h5>$ {{$item->Price}} </h5>
+                                    <div class="button">
+                                        <a href = "{{ url("/event/$item->EventID") }}">Check Out</a>
+                                    </div>
                             </form>
                         </div>
                     </div>

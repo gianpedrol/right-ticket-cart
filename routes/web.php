@@ -28,3 +28,5 @@ Route::get('/updatecart/{id}', [CartController::class, 'updateCart']);
 Route::get('cart/checkout ', [CartController::class, 'checkoutCart'])->name('checkout');
 
 Route::get('event/{id}', [CartController::class, 'showEvent']);
+
+Route::post('/order', [CartController::class,'storeOrder']);

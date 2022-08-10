@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Booking;
 use App\Models\Calendar;
 use App\Models\Event;
 use Facade\FlareClient\Http\Response;
@@ -89,5 +90,22 @@ class CartController extends Controller
         }
 
         return view('cart.cart', compact('event'));
+    }
+
+    public function storeOrder(Request $request){
+        $data = $request->only('companyName','firstName', 'lastName', 'email', 'phone', 'zipcode', 'valuePaid');
+
+        try {
+            \DB::beginTransaction();
+
+            $newBooking = new Booking();
+            
+
+            \DB::commit();
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
+            \DB::rollback();
+            return ['error' => 'Could not write data', 400];
+        }
     }
 }
